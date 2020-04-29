@@ -76,6 +76,8 @@ export default function PostCreate() {
   const [twentytwoZero, seTtwentytwoZero] = useState([]);
   const [norPersonS, seTnorPersonS] = useState([{ name: 'deneme asker' }]);
   const [towerDataS, seTtowerDataS] = useState([]);
+  const [towerName, seTtowerName] = useState([]);
+  const [allSoldier, seTallSoldier] = useState([]);
 
   const [postTimes, seTpostTimes] = useState([
     { label: '00.00 - 02.00', value: true },
@@ -132,9 +134,29 @@ export default function PostCreate() {
       .catch((err) => console.log(err));
   }
 
+  function getAllPost() {
+    axios
+      .get('http://localhost:5000/post/')
+      .then((res) => {
+        seTtowerName(res.data);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function getAllSoldier() {
+    axios
+      .get('http://localhost:5000/soldier/')
+      .then((res) => {
+        seTallSoldier(res.data);
+      })
+      .catch((err) => console.log(err));
+  }
   // componentDidMount = useEffect
   useEffect(() => {
     Moment.locale('en');
+    getAllPost();
+    getAllSoldier();
+
     getPostData();
   }, [state.selected_date, twentytwoZero, norPersonS]);
 
@@ -325,15 +347,11 @@ export default function PostCreate() {
             });
             seTtwentytwoZero(twentytwoZeroN);
           }
-          console.log(norPersonS);
 
-          if (say >= 33) {
-            seTnorPersonS([{ name: 'dene' }]);
+          if (say >= allSoldier.length / 2 + 5) {
             let y = norPersonS;
             y.shift();
             seTnorPersonS(y);
-            console.log(say);
-            console.log(norPersonS);
           }
         }
         seTnorPersonS([{ name: 'dene' }]);
@@ -423,32 +441,20 @@ export default function PostCreate() {
                   </FormGroup>
                 </Grid>
                 <Grid container item sm={12}>
-                  <FormGroup className="FormGroup" style={{ margin: '50px' }}>
+                  <FormGroup className="FormGroup" style={{ margin: '10px' }}>
                     <FormControl>
                       <table>
                         <tbody>
                           <tr>
                             <td>
-                              <b>NÖBET SAATLERİ</b>{' '}
+                              <b>NÖBET SAATLERİ{console.log(towerName)}</b>{' '}
                             </td>
-                            <td>
-                              <b>KULE 20</b>{' '}
-                            </td>
-                            <td>
-                              <b>KULE 21</b>{' '}
-                            </td>
-                            <td>
-                              <b>KOĞUŞ</b>{' '}
-                            </td>
-                            <td>
-                              <b>NİZAMİYE 1</b>{' '}
-                            </td>
-                            <td>
-                              <b>NİZAMİYE 2</b>{' '}
-                            </td>
-                            <td>
-                              <b>NİZAMİYE 3</b>{' '}
-                            </td>
+
+                            {towerName.map((tower) => (
+                              <td key={tower.name}>
+                                <b>{tower.name}</b>
+                              </td>
+                            ))}
                           </tr>
                         </tbody>
                         <tbody>
