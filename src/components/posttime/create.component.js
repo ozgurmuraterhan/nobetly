@@ -140,8 +140,8 @@ export default function PostCreate() {
 
   async function getPostData() {
     const NowDate = Moment(state.selected_date).format('dddd');
-    const towerData = [];
     const timeData = [];
+    const towerData = [];
 
     for (const i in postTimes) {
       let params = [{ nowDate: NowDate }, { time: postTimes[i] }];

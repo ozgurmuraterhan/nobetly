@@ -1,2 +1,1 @@
-# myCode video https://youtu.be/jj4uih7tXEg
-
+# Bu Program askerin görev yerine göre nöbet saatlerini ayarlamaya imkan sağlar. Yeni nöbet yeri ekleyebilirsiniz, nöbet yerinin açık olduğu saatleri seçebilirsiniz.
