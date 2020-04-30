@@ -120,20 +120,6 @@ export default function PostCreate() {
     date: state.selected_date,
   });
 
-  function addPostOfSoldier(id, data) {
-    axios
-      .post(`http://localhost:5000/soldier/addposttime/${id}`, data)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
-  }
-
-  function addPostOfSoldierNumber(id) {
-    axios
-      .get(`http://localhost:5000/soldier/addposttimenumber/${id}`)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
-  }
-
   function getAllPost() {
     axios
       .get('http://localhost:5000/post/')
@@ -178,7 +164,6 @@ export default function PostCreate() {
     }
 
     seTtowerDataS([{ data1: towerData }, { data2: timeData }]);
-    console.log(towerDataS);
   }
 
   async function getSoldierData(params) {
@@ -347,13 +332,16 @@ export default function PostCreate() {
             });
             seTtwentytwoZero(twentytwoZeroN);
           }
-
-          if (say >= allSoldier.length / 2 + 5) {
-            let y = norPersonS;
-            y.shift();
-            seTnorPersonS(y);
+          if (say >= allSoldier.length / 1.5) {
+            for (let yy = 0; yy < Number(towerDataS[0][i][j][k].person); yy++) {
+              let y = norPersonS;
+              y.shift();
+              seTnorPersonS(y);
+              console.log(norPersonS);
+            }
           }
         }
+
         seTnorPersonS([{ name: 'dene' }]);
       }
     }
@@ -447,7 +435,7 @@ export default function PostCreate() {
                         <tbody>
                           <tr>
                             <td>
-                              <b>NÖBET SAATLERİ{console.log(towerName)}</b>{' '}
+                              <b>NÖBET SAATLERİ </b>{' '}
                             </td>
 
                             {towerName.map((tower) => (
