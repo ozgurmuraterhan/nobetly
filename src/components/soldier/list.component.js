@@ -6,6 +6,7 @@ import MaterialTable, { MTableToolbar } from 'material-table';
 import { useTranslation } from 'react-i18next';
 
 import { Doughnut } from 'react-chartjs-2';
+import { useSnackbar } from 'notistack';
 
 import {
   DialogActions,
@@ -44,6 +45,7 @@ import '../../assets/css/style.css';
 export default function SoldierList() {
   const [t] = useTranslation();
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [customergroups, seTcustomergroups] = useState([]);
   const [open, seTopen] = useState(false);
@@ -157,6 +159,20 @@ export default function SoldierList() {
     axios.get('http://localhost:5000/soldiergroups').then((response) => {
       if (response.data.length > 0) {
         seTcustomergroups(response.data);
+      }
+    });
+  };
+
+  const getSoldierNumber = () => {
+    axios.get('http://localhost:5000/soldier/postnumberzero').then((res) => {
+      if (res.data.variant == 'error') {
+        enqueueSnackbar('Askerler Güncellenemedi' + res.data.messagge, {
+          variant: res.data.variant,
+        });
+      } else {
+        enqueueSnackbar('Askerler Güncellendi', {
+          variant: res.data.variant,
+        });
       }
     });
   };
@@ -287,6 +303,7 @@ export default function SoldierList() {
                       >
                         {t('Asker Listesi')}
                       </Typography>
+                      <Button onClick={getSoldierNumber}>Nöbet Sıfırla</Button>
                       <Link to="/SoldierCreate" className="addButtonPlace">
                         <Tooltip title={t('Asker Ekle')}>
                           <AddBox fontSize="large" className="addButtonIcon" />

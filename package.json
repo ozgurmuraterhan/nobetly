@@ -47,6 +47,7 @@
     "react-sidebar": "^3.0.2",
     "react-sliding-pane": "^3.1.0",
     "react-swipeable-views": "^0.13.3",
+    "react-to-print": "^2.7.0",
     "react-transition-group": "^1.2.1",
     "recharts": "^1.7.1",
     "rumble-charts": "^2.0.0",

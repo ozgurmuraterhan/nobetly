@@ -60,8 +60,10 @@ export default function PostCreate() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [gropBoxOpen, seTgropBoxOpen] = useState(false);
+  const [disabledButton, seTdisabledButton] = useState(true);
   const [changeNewGroupNameJust, seTchangeNewGroupNameJust] = useState('');
   const [findpostGroup, seTfindpostGroup] = useState([]);
+
   const [zeroTwo, seTzeroTwo] = useState([]);
   const [twoFour, seTtwoFour] = useState([]);
   const [fourSix, seTfourSix] = useState([]);
@@ -74,10 +76,12 @@ export default function PostCreate() {
   const [eightteenTwenty, seTeightteenTwenty] = useState([]);
   const [twentyTwentytwo, seTtwentyTwentytwo] = useState([]);
   const [twentytwoZero, seTtwentytwoZero] = useState([]);
+
   const [norPersonS, seTnorPersonS] = useState([{ name: 'deneme asker' }]);
   const [towerDataS, seTtowerDataS] = useState([]);
   const [towerName, seTtowerName] = useState([]);
   const [allSoldier, seTallSoldier] = useState([]);
+  const [LocalPosts, seTLocalPosts] = useState([]);
 
   const [postTimes, seTpostTimes] = useState([
     { label: '00.00 - 02.00', value: true },
@@ -169,12 +173,15 @@ export default function PostCreate() {
   async function getSoldierData(params) {
     const postPerson = [];
     const norPerson = norPersonS;
-
+    console.log('Norperson');
+    console.log(norPersonS);
     await axios
       .post('http://localhost:5000/soldier/gettime', params)
       .then((res) => {
+        console.log();
         postPerson.push({
           name: res.data.name,
+          gun_number: res.data.gun_number,
         });
         norPerson.push({
           name: res.data.name,
@@ -185,6 +192,7 @@ export default function PostCreate() {
   }
 
   async function createPostTime(e) {
+    seTdisabledButton(true);
     const NowDate = Moment(state.selected_date).format('dddd');
     const zeroTwoN = [];
     const twoFourN = [];
@@ -198,27 +206,86 @@ export default function PostCreate() {
     const eightteenTwentyN = [];
     const twentyTwentytwoN = [];
     const twentytwoZeroN = [];
-    let say = 0;
+    const LocalPostsN = [];
 
     for (const i in towerDataS[0]) {
       //console.log(towerDataS[0][i]);
-      let say = 1;
+      let say = 0;
       for (const j in towerDataS[0][i]) {
         //console.log(towerDataS[0][i][j]);
         for (const k in towerDataS[0][i][j]) {
           say = say + 1;
           //console.log( towerDataS[0][i][j][k].name +  ' - ' + towerDataS[0][i][j][k].times[NowDate][j].label );
           let postPerson = [];
+          let postImportantNumber = 1;
+
           if (towerDataS[0][i][j][k].times[NowDate][j].value) {
+            /*if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '00.00 - 02.00'
+            ) {
+              postImportantNumber = 1.3;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '02.00 - 04.00'
+            ) {
+              postImportantNumber = 1.5;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '04.00 - 06.00'
+            ) {
+              postImportantNumber = 1.3;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '06.00 - 08.00'
+            ) {
+              postImportantNumber = 1.2;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '08.00 - 10.00'
+            ) {
+              postImportantNumber = 0.8;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '10.00 - 12.00'
+            ) {
+              postImportantNumber = 1;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '12.00 - 14.00'
+            ) {
+              postImportantNumber = 1;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '14.00 - 16.00'
+            ) {
+              postImportantNumber = 1;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '16.00 - 18.00'
+            ) {
+              postImportantNumber = 1;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '18.00 - 20.00'
+            ) {
+              postImportantNumber = 1;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '20.00 - 22.00'
+            ) {
+              postImportantNumber = 1;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '22.00 - 00.00'
+            ) {
+              postImportantNumber = 1.1;
+            }*/
+
             for (let yy = 0; yy < Number(towerDataS[0][i][j][k].person); yy++) {
               let params = [
                 { nowDate: NowDate },
                 { time: towerDataS[0][i][j][k].times[NowDate][j].label },
                 { norPerson: norPersonS },
+                { plusNumber: postImportantNumber },
               ];
 
               let inTheSoldier = await getSoldierData(params);
               postPerson.push(inTheSoldier);
+
+              LocalPostsN.push({
+                tower: towerDataS[0][i][j][k].name,
+                time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                person: inTheSoldier.name,
+              });
             }
           } else {
             postPerson.push({ name: 'NÖBET YOK' });
@@ -332,12 +399,11 @@ export default function PostCreate() {
             });
             seTtwentytwoZero(twentytwoZeroN);
           }
-          if (say >= allSoldier.length / 1.5) {
+          if (say >= allSoldier.length / 2.3) {
             for (let yy = 0; yy < Number(towerDataS[0][i][j][k].person); yy++) {
               let y = norPersonS;
               y.shift();
               seTnorPersonS(y);
-              console.log(norPersonS);
             }
           }
         }
@@ -345,11 +411,32 @@ export default function PostCreate() {
         seTnorPersonS([{ name: 'dene' }]);
       }
     }
+
+    seTLocalPosts(LocalPostsN);
   }
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const post = {};
+
+    const post = {
+      date: state.selected_date,
+      posts: LocalPosts,
+      postsview: {
+        zeroTwo,
+        twoFour,
+        fourSix,
+        sixEight,
+        eightTen,
+        tenTwelve,
+        twelveFourteen,
+        fourteenSixteen,
+        sixteenEightteen,
+        eightteenTwenty,
+        twentyTwentytwo,
+        twentytwoZero,
+        LocalPosts,
+      },
+    };
 
     console.log(post);
 
@@ -401,6 +488,7 @@ export default function PostCreate() {
                           value={state.selected_date}
                           onChange={(date) => {
                             seTstate({ ...state, selected_date: date });
+                            seTdisabledButton(false);
                           }}
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
@@ -421,6 +509,7 @@ export default function PostCreate() {
                         style={{ marginTop: '10px' }}
                         variant="contained"
                         color="primary"
+                        disabled={disabledButton}
                         onClick={createPostTime}
                       >
                         Nöbet Oluştur

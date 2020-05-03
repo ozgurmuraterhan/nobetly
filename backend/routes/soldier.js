@@ -43,7 +43,7 @@ router.route('/gettime').post((req, res, next) => {
         ],
       },
 
-      { $inc: { totalPost: +1 } },
+      { $inc: { totalPost: +req.body[3].plusNumber } },
       { sort: { totalPost: 1 } }
     ).then((data) => {
       res.json(data);
@@ -61,7 +61,7 @@ router.route('/gettime').post((req, res, next) => {
         ],
       },
 
-      { $inc: { totalPost: +1 } },
+      { $inc: { totalPost: +req.body[3].plusNumber } },
       { sort: { totalPost: 1 } }
     ).then((data) => {
       res.json(data);
@@ -82,7 +82,7 @@ router.route('/gettime').post((req, res, next) => {
         ],
       },
 
-      { $inc: { totalPost: +1 } },
+      { $inc: { totalPost: +req.body[3].plusNumber } },
       { sort: { totalPost: 1 } }
     ).then((data) => {
       res.json(data);
@@ -100,7 +100,7 @@ router.route('/gettime').post((req, res, next) => {
         ],
       },
 
-      { $inc: { totalPost: +1 } },
+      { $inc: { totalPost: +req.body[3].plusNumber } },
       { sort: { totalPost: 1 } }
     ).then((data) => {
       res.json(data);
@@ -120,7 +120,7 @@ router.route('/gettime').post((req, res, next) => {
         ],
       },
 
-      { $inc: { totalPost: +1 } },
+      { $inc: { totalPost: +req.body[3].plusNumber } },
       { sort: { totalPost: 1 } }
     ).then((data) => {
       res.json(data);
@@ -138,7 +138,7 @@ router.route('/gettime').post((req, res, next) => {
         ],
       },
 
-      { $inc: { totalPost: +1 } },
+      { $inc: { totalPost: +req.body[3].plusNumber } },
       { sort: { totalPost: 1 } }
     ).then((data) => {
       res.json(data);
@@ -155,7 +155,7 @@ router.route('/gettime').post((req, res, next) => {
         ],
       },
 
-      { $inc: { totalPost: +1 } },
+      { $inc: { totalPost: +req.body[3].plusNumber } },
       { sort: { totalPost: 1 } }
     ).then((data) => {
       res.json(data);
@@ -164,8 +164,8 @@ router.route('/gettime').post((req, res, next) => {
 });
 
 // update add post by id
-router.route('/addposttimenumber/:id').get((req, res, next) => {
-  Soldier.findOneAndUpdate({ _id: req.params.id }, { $inc: { totalPost: +1 } })
+router.route('/postnumberzero').get((req, res, next) => {
+  Soldier.updateMany({}, { $set: { totalPost: 0 } })
     .then(() => {
       res.json({
         messagge: title + ' Update',
