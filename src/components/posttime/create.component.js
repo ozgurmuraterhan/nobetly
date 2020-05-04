@@ -173,15 +173,21 @@ export default function PostCreate() {
   async function getSoldierData(params) {
     const postPerson = [];
     const norPerson = norPersonS;
-    console.log('Norperson');
-    console.log(norPersonS);
+    console.log(params[4].isTower);
     await axios
+
       .post('http://localhost:5000/soldier/gettime', params)
       .then((res) => {
-        console.log();
+        let gunNumber = '';
+        if (params[4].isTower == 'KULE') {
+          gunNumber = res.data.gun_number;
+        } else {
+          gunNumber = '';
+        }
+
         postPerson.push({
           name: res.data.name,
-          gun_number: res.data.gun_number,
+          gun_number: gunNumber,
         });
         norPerson.push({
           name: res.data.name,
@@ -220,62 +226,13 @@ export default function PostCreate() {
           let postImportantNumber = 1;
 
           if (towerDataS[0][i][j][k].times[NowDate][j].value) {
-            /*if (
-              towerDataS[0][i][j][k].times[NowDate][j].label == '00.00 - 02.00'
-            ) {
-              postImportantNumber = 1.3;
-            } else if (
-              towerDataS[0][i][j][k].times[NowDate][j].label == '02.00 - 04.00'
-            ) {
-              postImportantNumber = 1.5;
-            } else if (
-              towerDataS[0][i][j][k].times[NowDate][j].label == '04.00 - 06.00'
-            ) {
-              postImportantNumber = 1.3;
-            } else if (
-              towerDataS[0][i][j][k].times[NowDate][j].label == '06.00 - 08.00'
-            ) {
-              postImportantNumber = 1.2;
-            } else if (
-              towerDataS[0][i][j][k].times[NowDate][j].label == '08.00 - 10.00'
-            ) {
-              postImportantNumber = 0.8;
-            } else if (
-              towerDataS[0][i][j][k].times[NowDate][j].label == '10.00 - 12.00'
-            ) {
-              postImportantNumber = 1;
-            } else if (
-              towerDataS[0][i][j][k].times[NowDate][j].label == '12.00 - 14.00'
-            ) {
-              postImportantNumber = 1;
-            } else if (
-              towerDataS[0][i][j][k].times[NowDate][j].label == '14.00 - 16.00'
-            ) {
-              postImportantNumber = 1;
-            } else if (
-              towerDataS[0][i][j][k].times[NowDate][j].label == '16.00 - 18.00'
-            ) {
-              postImportantNumber = 1;
-            } else if (
-              towerDataS[0][i][j][k].times[NowDate][j].label == '18.00 - 20.00'
-            ) {
-              postImportantNumber = 1;
-            } else if (
-              towerDataS[0][i][j][k].times[NowDate][j].label == '20.00 - 22.00'
-            ) {
-              postImportantNumber = 1;
-            } else if (
-              towerDataS[0][i][j][k].times[NowDate][j].label == '22.00 - 00.00'
-            ) {
-              postImportantNumber = 1.1;
-            }*/
-
             for (let yy = 0; yy < Number(towerDataS[0][i][j][k].person); yy++) {
               let params = [
                 { nowDate: NowDate },
                 { time: towerDataS[0][i][j][k].times[NowDate][j].label },
                 { norPerson: norPersonS },
                 { plusNumber: postImportantNumber },
+                { isTower: towerDataS[0][i][j][k].group_id[0].label },
               ];
 
               let inTheSoldier = await getSoldierData(params);
@@ -399,7 +356,7 @@ export default function PostCreate() {
             });
             seTtwentytwoZero(twentytwoZeroN);
           }
-          if (say >= allSoldier.length / 2.3) {
+          if (say >= allSoldier.length / 3) {
             for (let yy = 0; yy < Number(towerDataS[0][i][j][k].person); yy++) {
               let y = norPersonS;
               y.shift();

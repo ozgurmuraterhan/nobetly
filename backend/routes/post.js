@@ -24,16 +24,9 @@ router.route('/').get((req, res, next) => {
 //post gettime
 router.route('/gettime').post((req, res, next) => {
   if (req.body[0].nowDate == 'Monday') {
-    Post.aggregate([
-      {
-        $project: {
-          name: 1,
-          _id: 1,
-          'times.Monday': 1,
-          person: 1,
-        },
-      },
-    ]).then((data) => {
+    Post.find({
+      'times.Monday.label': req.body[1].time.label,
+    }).then((data) => {
       res.json(data);
     });
   }

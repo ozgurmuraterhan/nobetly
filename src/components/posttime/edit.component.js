@@ -40,6 +40,7 @@ import {
   ContactMail,
   Save,
   BorderOuterSharp,
+  Print,
 } from '@material-ui/icons';
 
 import trLocale from 'date-fns/locale/tr';
@@ -54,296 +55,520 @@ import Moment from 'moment';
 import cities from '../cities/cities.json';
 
 import '../../assets/css/style.css';
+import { setDate } from 'date-fns';
 
 export default function PostEdit(props) {
   class ComponentToPrint extends React.Component {
     render() {
       return (
-        <table style={{ fontSize: '10pt' }}>
-          <tbody>
-            <tr>
-              <td>
-                <b>NÖBET SAATLERİ </b>{' '}
-              </td>
-
-              {towerName.map((tower) => (
-                <td key={tower.name}>
-                  <b>{tower.name}</b>
+        <div>
+          <h3 style={{ borderBottom: '1px solid #000' }}>
+            Karargah Birlik Komutanlığı Nöbet Listesi{' '}
+            <span style={{ float: 'right', marginRight: '25px' }}>
+              {Moment(PostDate).format('DD MMMM YYYY  - dddd')}
+            </span>{' '}
+          </h3>
+          <table style={{ fontSize: '10pt', width: '100%' }}>
+            <tbody>
+              <tr>
+                <td>
+                  <b>SAATLER </b>
                 </td>
-              ))}
-            </tr>
-          </tbody>
-          <tbody>
-            <tr>
-              <td style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}>
-                <b>00.00 - 02.00</b>{' '}
-              </td>
-              {zeroTwo.map((data) => (
-                <td key={data.tower} style={{ borderBottom: '1px solid #ccc' }}>
-                  {data.person.map((data2) => (
-                    <span key={data2.key}>
-                      {data2.name}
-                      <span style={{ float: 'right', marginRight: '10px' }}>
-                        {data2.gun_number}
+
+                {towerName.map((tower) => (
+                  <td key={tower.name}>
+                    <b>{tower.name}</b>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <td
+                  style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}
+                >
+                  <b>
+                    00.00 <br /> 02.00
+                  </b>{' '}
+                </td>
+                {zeroTwo.map((data) => (
+                  <td
+                    key={data.tower}
+                    style={{ borderBottom: '1px solid #ccc' }}
+                  >
+                    {data.person.map((data2) => (
+                      <span key={data2.key}>
+                        {data2.name}
+                        <span style={{ float: 'right', marginRight: '10px' }}>
+                          {data2.gun_number}
+                        </span>
+
+                        <br />
                       </span>
-
-                      <br />
-                    </span>
-                  ))}{' '}
+                    ))}{' '}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <td
+                  style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}
+                >
+                  <b>
+                    02.00 <br /> 04.00
+                  </b>{' '}
                 </td>
-              ))}
-            </tr>
-          </tbody>
-          <tbody>
-            <tr>
-              <td style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}>
-                <b>02.00 - 04.00</b>{' '}
-              </td>
-              {twoFour.map((data) => (
-                <td key={data.tower} style={{ borderBottom: '1px solid #ccc' }}>
-                  {data.person.map((data2) => (
-                    <span key={data2.key}>
-                      {data2.name}
-                      <span style={{ float: 'right', marginRight: '10px' }}>
-                        {data2.gun_number}
+                {twoFour.map((data) => (
+                  <td
+                    key={data.tower}
+                    style={{ borderBottom: '1px solid #ccc' }}
+                  >
+                    {data.person.map((data2) => (
+                      <span key={data2.key}>
+                        {data2.name}
+                        <span style={{ float: 'right', marginRight: '10px' }}>
+                          {data2.gun_number}
+                        </span>
+
+                        <br />
                       </span>
+                    ))}{' '}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
 
-                      <br />
-                    </span>
-                  ))}{' '}
+            <tbody>
+              <tr>
+                <td
+                  style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}
+                >
+                  <b>
+                    04.00 <br /> 06.00
+                  </b>{' '}
                 </td>
-              ))}
-            </tr>
-          </tbody>
-
-          <tbody>
-            <tr>
-              <td style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}>
-                <b>04.00 - 06.00</b>{' '}
-              </td>
-              {fourSix.map((data) => (
-                <td key={data.tower} style={{ borderBottom: '1px solid #ccc' }}>
-                  {data.person.map((data2) => (
-                    <span key={data2.key}>
-                      {data2.name}{' '}
-                      <span style={{ float: 'right', marginRight: '10px' }}>
-                        {data2.gun_number}
+                {fourSix.map((data) => (
+                  <td
+                    key={data.tower}
+                    style={{ borderBottom: '1px solid #ccc' }}
+                  >
+                    {data.person.map((data2) => (
+                      <span key={data2.key}>
+                        {data2.name}{' '}
+                        <span style={{ float: 'right', marginRight: '10px' }}>
+                          {data2.gun_number}
+                        </span>
+                        <br />
                       </span>
-                      <br />
-                    </span>
-                  ))}{' '}
+                    ))}{' '}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+
+            <tbody>
+              <tr>
+                <td
+                  style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}
+                >
+                  <b>
+                    06.00 <br /> 08.00
+                  </b>{' '}
                 </td>
-              ))}
-            </tr>
-          </tbody>
 
-          <tbody>
-            <tr>
-              <td style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}>
-                <b>06.00 - 08.00</b>{' '}
-              </td>
+                {sixEight.map((data) => (
+                  <td
+                    key={data.tower}
+                    style={{ borderBottom: '1px solid #ccc' }}
+                  >
+                    {data.person.map((data2) => (
+                      <span key={data2.key}>
+                        {data2.name}
+                        <span style={{ float: 'right', marginRight: '10px' }}>
+                          {data2.gun_number}
+                        </span>
 
-              {sixEight.map((data) => (
-                <td key={data.tower} style={{ borderBottom: '1px solid #ccc' }}>
-                  {data.person.map((data2) => (
-                    <span key={data2.key}>
-                      {data2.name}
-                      <span style={{ float: 'right', marginRight: '10px' }}>
-                        {data2.gun_number}
+                        <br />
                       </span>
+                    ))}{' '}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
 
-                      <br />
-                    </span>
-                  ))}{' '}
+            <tbody>
+              <tr>
+                <td
+                  style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}
+                >
+                  <b>
+                    08.00 <br /> 10.00
+                  </b>{' '}
                 </td>
-              ))}
-            </tr>
-          </tbody>
 
-          <tbody>
-            <tr>
-              <td style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}>
-                <b>08.00 - 10.00</b>{' '}
-              </td>
+                {eightTen.map((data) => (
+                  <td
+                    key={data.tower}
+                    style={{ borderBottom: '1px solid #ccc' }}
+                  >
+                    {data.person.map((data2) => (
+                      <span key={data2.key}>
+                        {data2.name}
+                        <span style={{ float: 'right', marginRight: '10px' }}>
+                          {data2.gun_number}
+                        </span>
 
-              {eightTen.map((data) => (
-                <td key={data.tower} style={{ borderBottom: '1px solid #ccc' }}>
-                  {data.person.map((data2) => (
-                    <span key={data2.key}>
-                      {data2.name}
-                      <span style={{ float: 'right', marginRight: '10px' }}>
-                        {data2.gun_number}
+                        <br />
                       </span>
+                    ))}{' '}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
 
-                      <br />
-                    </span>
-                  ))}{' '}
+            <tbody>
+              <tr>
+                <td
+                  style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}
+                >
+                  <b>
+                    10.00 <br /> 12.00
+                  </b>{' '}
                 </td>
-              ))}
-            </tr>
-          </tbody>
 
-          <tbody>
-            <tr>
-              <td style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}>
-                <b>10.00 - 12.00</b>{' '}
-              </td>
+                {tenTwelve.map((data) => (
+                  <td
+                    key={data.tower}
+                    style={{ borderBottom: '1px solid #ccc' }}
+                  >
+                    {data.person.map((data2) => (
+                      <span key={data2.key}>
+                        {data2.name}
+                        <span style={{ float: 'right', marginRight: '10px' }}>
+                          {data2.gun_number}
+                        </span>
 
-              {tenTwelve.map((data) => (
-                <td key={data.tower} style={{ borderBottom: '1px solid #ccc' }}>
-                  {data.person.map((data2) => (
-                    <span key={data2.key}>
-                      {data2.name}
-                      <span style={{ float: 'right', marginRight: '10px' }}>
-                        {data2.gun_number}
+                        <br />
                       </span>
+                    ))}{' '}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
 
-                      <br />
-                    </span>
-                  ))}{' '}
+            <tbody>
+              <tr>
+                <td
+                  style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}
+                >
+                  <b>
+                    12.00 <br /> 14.00
+                  </b>{' '}
                 </td>
-              ))}
-            </tr>
-          </tbody>
 
-          <tbody>
-            <tr>
-              <td style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}>
-                <b>12.00 - 14.00</b>{' '}
-              </td>
+                {twelveFourteen.map((data) => (
+                  <td
+                    key={data.tower}
+                    style={{ borderBottom: '1px solid #ccc' }}
+                  >
+                    {data.person.map((data2) => (
+                      <span key={data2.key}>
+                        {data2.name}
+                        <span style={{ float: 'right', marginRight: '10px' }}>
+                          {data2.gun_number}
+                        </span>
 
-              {twelveFourteen.map((data) => (
-                <td key={data.tower} style={{ borderBottom: '1px solid #ccc' }}>
-                  {data.person.map((data2) => (
-                    <span key={data2.key}>
-                      {data2.name}
-                      <span style={{ float: 'right', marginRight: '10px' }}>
-                        {data2.gun_number}
+                        <br />
                       </span>
+                    ))}{' '}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
 
-                      <br />
-                    </span>
-                  ))}{' '}
+            <tbody>
+              <tr>
+                <td
+                  style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}
+                >
+                  <b>
+                    14.00 <br /> 16.00
+                  </b>{' '}
                 </td>
-              ))}
-            </tr>
-          </tbody>
 
-          <tbody>
-            <tr>
-              <td style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}>
-                <b>14.00 - 16.00</b>{' '}
-              </td>
+                {fourteenSixteen.map((data) => (
+                  <td
+                    key={data.tower}
+                    style={{ borderBottom: '1px solid #ccc' }}
+                  >
+                    {data.person.map((data2) => (
+                      <span key={data2.key}>
+                        {data2.name}
+                        <span style={{ float: 'right', marginRight: '10px' }}>
+                          {data2.gun_number}
+                        </span>
 
-              {fourteenSixteen.map((data) => (
-                <td key={data.tower} style={{ borderBottom: '1px solid #ccc' }}>
-                  {data.person.map((data2) => (
-                    <span key={data2.key}>
-                      {data2.name}
-                      <span style={{ float: 'right', marginRight: '10px' }}>
-                        {data2.gun_number}
+                        <br />
                       </span>
+                    ))}{' '}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
 
-                      <br />
-                    </span>
-                  ))}{' '}
+            <tbody>
+              <tr>
+                <td
+                  style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}
+                >
+                  <b>
+                    16.00 <br /> 18.00
+                  </b>{' '}
                 </td>
-              ))}
-            </tr>
-          </tbody>
 
-          <tbody>
-            <tr>
-              <td style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}>
-                <b>16.00 - 18.00</b>{' '}
-              </td>
+                {sixteenEightteen.map((data) => (
+                  <td
+                    key={data.tower}
+                    style={{ borderBottom: '1px solid #ccc' }}
+                  >
+                    {data.person.map((data2) => (
+                      <span key={data2.key}>
+                        {data2.name}
+                        <span style={{ float: 'right', marginRight: '10px' }}>
+                          {data2.gun_number}
+                        </span>
 
-              {sixteenEightteen.map((data) => (
-                <td key={data.tower} style={{ borderBottom: '1px solid #ccc' }}>
-                  {data.person.map((data2) => (
-                    <span key={data2.key}>
-                      {data2.name}
-                      <span style={{ float: 'right', marginRight: '10px' }}>
-                        {data2.gun_number}
+                        <br />
                       </span>
+                    ))}{' '}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
 
-                      <br />
-                    </span>
-                  ))}{' '}
+            <tbody>
+              <tr>
+                <td
+                  style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}
+                >
+                  <b>
+                    18.00 <br /> 20.00
+                  </b>{' '}
                 </td>
-              ))}
-            </tr>
-          </tbody>
 
-          <tbody>
-            <tr>
-              <td style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}>
-                <b>18.00 - 20.00</b>{' '}
-              </td>
+                {eightteenTwenty.map((data) => (
+                  <td
+                    key={data.tower}
+                    style={{ borderBottom: '1px solid #ccc' }}
+                  >
+                    {data.person.map((data2) => (
+                      <span key={data2.key}>
+                        {data2.name}
+                        <span style={{ float: 'right', marginRight: '10px' }}>
+                          {data2.gun_number}
+                        </span>
 
-              {eightteenTwenty.map((data) => (
-                <td key={data.tower} style={{ borderBottom: '1px solid #ccc' }}>
-                  {data.person.map((data2) => (
-                    <span key={data2.key}>
-                      {data2.name}
-                      <span style={{ float: 'right', marginRight: '10px' }}>
-                        {data2.gun_number}
+                        <br />
                       </span>
+                    ))}{' '}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
 
-                      <br />
-                    </span>
-                  ))}{' '}
+            <tbody>
+              <tr>
+                <td
+                  style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}
+                >
+                  <b>
+                    20.00 <br /> 22.00
+                  </b>{' '}
                 </td>
-              ))}
-            </tr>
-          </tbody>
 
-          <tbody>
-            <tr>
-              <td style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}>
-                <b>20.00 - 22.00</b>{' '}
-              </td>
+                {twentyTwentytwo.map((data) => (
+                  <td
+                    key={data.tower}
+                    style={{ borderBottom: '1px solid #ccc' }}
+                  >
+                    {data.person.map((data2) => (
+                      <span key={data2.key}>
+                        {data2.name}
+                        <span style={{ float: 'right', marginRight: '10px' }}>
+                          {data2.gun_number}
+                        </span>
 
-              {twentyTwentytwo.map((data) => (
-                <td key={data.tower} style={{ borderBottom: '1px solid #ccc' }}>
-                  {data.person.map((data2) => (
-                    <span key={data2.key}>
-                      {data2.name}
-                      <span style={{ float: 'right', marginRight: '10px' }}>
-                        {data2.gun_number}
+                        <br />
                       </span>
+                    ))}{' '}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
 
-                      <br />
-                    </span>
-                  ))}{' '}
+            <tbody>
+              <tr>
+                <td
+                  style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}
+                >
+                  <b>
+                    22.00 <br /> 00.00
+                  </b>{' '}
                 </td>
-              ))}
-            </tr>
-          </tbody>
 
-          <tbody>
-            <tr>
-              <td style={{ borderBottom: '1px solid #ccc', fontSize: '11pt' }}>
-                <b>22.00 - 00.00</b>{' '}
-              </td>
+                {twentytwoZero.map((data) => (
+                  <td
+                    key={data.tower}
+                    style={{ borderBottom: '1px solid #ccc' }}
+                  >
+                    {data.person.map((data2) => (
+                      <span key={data2.key}>
+                        {data2.name}
+                        <span style={{ float: 'right', marginRight: '10px' }}>
+                          {data2.gun_number}
+                        </span>
 
-              {twentytwoZero.map((data) => (
-                <td key={data.tower} style={{ borderBottom: '1px solid #ccc' }}>
-                  {data.person.map((data2) => (
-                    <span key={data2.key}>
-                      {data2.name}
-                      <span style={{ float: 'right', marginRight: '10px' }}>
-                        {data2.gun_number}
+                        <br />
                       </span>
-
-                      <br />
-                    </span>
-                  ))}{' '}
-                </td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
+                    ))}{' '}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+          <div style={{ float: 'left', width: '600px' }}>
+            <br />
+            <b>TALİMATLAR</b>
+            <br />
+            <input
+              style={{ width: '100%', float: 'left', border: 'none' }}
+              value="1- Nöbetler iç hizmet yönetmeliği medde 630'a göre tutulacaktır."
+            />
+            <br />
+            <input
+              style={{ width: '100%', float: 'left', border: 'none' }}
+              value="2- Nöbetler erbaş ve erler nöbet yerindeki talimatları okuyacak ve
+            bilecektir."
+            />{' '}
+            <br />
+            <input
+              style={{ width: '100%', float: 'left', border: 'none' }}
+              value="3- Nöbetçi, nöbet yeri genel ve özel talimatına göre hareket
+            edecektir."
+            />{' '}
+            <br />
+            <input
+              style={{ width: '100%', float: 'left', border: 'none' }}
+              value="4- Vip Nöbetçileri, havuza gelen ziyaretçileri gözleyecektir."
+            />{' '}
+            <br />
+            <input
+              style={{ width: '100%', float: 'left', border: 'none' }}
+              value="5- Kule nöbetçileri 6 şarşör ve 100 mermi alacaktır."
+            />{' '}
+            <br />
+            <input
+              style={{ width: '100%', float: 'left', border: 'none' }}
+              value="6- Nöbet değişikliği, erlerin müsaitlik durumuna göre çavuş
+            tarafından belirlenir."
+            />
+            <br />
+            <b style={{ float: 'left', marginRight: '15px' }}>
+              Nöbetçi Çavuş:{' '}
+            </b>{' '}
+            <input
+              style={{
+                width: '30%',
+                fontSize: '12pt',
+                float: 'left',
+                border: 'none',
+              }}
+              value="İnanır İLHAN"
+            />
+          </div>
+          <div
+            style={{
+              float: 'right',
+              marginLeft: '125px',
+              marginRight: '25px',
+              textAlign: 'center',
+            }}
+          >
+            {' '}
+            <br />
+            <b>TASTİK EDEN</b>
+            <br /> <br />
+            <br />
+            <input
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                float: 'left',
+                border: 'none',
+              }}
+              value="Tolga TURAN"
+            />
+            <br />{' '}
+            <input
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                float: 'left',
+                border: 'none',
+              }}
+              value="J. Yzb."
+            />
+            <br />{' '}
+            <input
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                float: 'left',
+                border: 'none',
+              }}
+              value="Kh. Brl. K."
+            />
+            <br />
+          </div>
+          <div style={{ float: 'right', textAlign: 'center' }}>
+            {' '}
+            <br />
+            <b>TANZİM EDEN</b>
+            <br /> <br />
+            <br />
+            <input
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                float: 'left',
+                border: 'none',
+              }}
+              value="Cumali KOÇYİĞİT"
+            />
+            <br />{' '}
+            <input
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                float: 'left',
+                border: 'none',
+              }}
+              value="Uzm. J.V.Kad. Çvş."
+            />
+            <br />{' '}
+            <input
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                float: 'left',
+                border: 'none',
+              }}
+              value="Mhf. Tk. K."
+            />
+            <br />
+          </div>
+        </div>
       );
     }
   }
@@ -365,6 +590,7 @@ export default function PostEdit(props) {
   const [twentyTwentytwo, seTtwentyTwentytwo] = useState([]);
   const [twentytwoZero, seTtwentytwoZero] = useState([]);
 
+  const [PostDate, setPostDate] = useState('');
   const [towerName, seTtowerName] = useState([]);
 
   function getAllPost() {
@@ -385,6 +611,7 @@ export default function PostEdit(props) {
     axios
       .get(`http://localhost:5000/posttime/${props.match.params.id}`)
       .then((res) => {
+        setPostDate(res.data.date);
         seTzeroTwo(res.data.postsview[0].zeroTwo);
         seTtwoFour(res.data.postsview[0].twoFour);
         seTfourSix(res.data.postsview[0].fourSix);
@@ -422,7 +649,12 @@ export default function PostEdit(props) {
               <Grid item container sm={12}>
                 <Grid container item sm={12}>
                   <ReactToPrint
-                    trigger={() => <button>Print this out!</button>}
+                    trigger={() => (
+                      <Button style={{ float: 'right' }}>
+                        YAZDIR - -
+                        <Print fontSize="large" />
+                      </Button>
+                    )}
                     content={() => componentRef.current}
                   />
 

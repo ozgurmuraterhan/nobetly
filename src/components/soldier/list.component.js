@@ -302,8 +302,16 @@ export default function SoldierList() {
                         className="typography"
                       >
                         {t('Asker Listesi')}
+                        <br />
+                        <Button
+                          onClick={getSoldierNumber}
+                          style={{ float: 'right', marginRight: '25px' }}
+                          color="secondary"
+                        >
+                          Yeni Asker Geldi, Nöbet Sıfırla
+                        </Button>
                       </Typography>
-                      <Button onClick={getSoldierNumber}>Nöbet Sıfırla</Button>
+
                       <Link to="/SoldierCreate" className="addButtonPlace">
                         <Tooltip title={t('Asker Ekle')}>
                           <AddBox fontSize="large" className="addButtonIcon" />

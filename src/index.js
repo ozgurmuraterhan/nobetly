@@ -6,12 +6,13 @@ import App from './App';
 // import Language config file
 import './i18n';
 
-
 ReactDOM.render(
-
-  <SnackbarProvider maxSnack={2} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+  <SnackbarProvider
+    maxSnack={2}
+    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+  >
     <App />
   </SnackbarProvider>,
 
-  document.getElementById('root'),
+  document.getElementById('root')
 );
