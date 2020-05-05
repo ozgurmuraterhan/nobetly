@@ -5,7 +5,6 @@ const PostTimeSchema = new Schema(
   {
     date: {
       type: Date,
-
       required: true,
       unique: true,
     },

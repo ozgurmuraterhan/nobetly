@@ -29,6 +29,27 @@ router.route('/').get((req, res, next) => {
     );
 });
 
+// get all name of items
+router.route('/name').get((req, res, next) => {
+  Soldier.aggregate([
+    {
+      $project: {
+        name: 1,
+        _id: 0,
+      },
+    },
+  ])
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) =>
+      res.json({
+        messagge: 'Error: ' + err,
+        variant: 'error',
+      })
+    );
+});
+
 // fetch data by now date
 router.route('/gettime').post((req, res, next) => {
   if (req.body[0].nowDate == 'Monday') {

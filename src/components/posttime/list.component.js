@@ -20,6 +20,7 @@ import {
   Typography,
   FormGroup,
   FormControl,
+  Button,
   FormHelperText,
 } from '@material-ui/core';
 
@@ -57,6 +58,7 @@ export default function PostTime() {
     selected_date: Date.now(),
   });
   const [soldier, seTsoldier] = useState([]);
+  const [soldierView, seTsoldierView] = useState([]);
 
   const columns = [
     {
@@ -106,7 +108,6 @@ export default function PostTime() {
   };
 
   const getPostSoldierStatistic = () => {
-    let shortArray = [];
     axios.post('http://localhost:5000/posttime/statistic').then((res) => {
       seTpostSoldierCount(res.data);
     });
@@ -119,7 +120,7 @@ export default function PostTime() {
   };
 
   const getPostSoldier = () => {
-    axios.get('http://localhost:5000/soldier/').then((res) => {
+    axios.get('http://localhost:5000/soldier/name/').then((res) => {
       seTsoldier(res.data);
     });
   };
@@ -131,6 +132,19 @@ export default function PostTime() {
     getPostSoldier();
   }, []);
 
+  const getStatiticView = () => {
+    const soldierN = [];
+    for (const i in soldier) {
+      let a = postSoldierCount.find(function (element) {
+        return element._id == soldier[i].name;
+      });
+      if (a != undefined) {
+        soldierN.push(a);
+      }
+    }
+    seTsoldierView(soldierN);
+    console.log(soldierN);
+  };
   return (
     <>
       <div className="containerP">
@@ -185,10 +199,18 @@ export default function PostTime() {
               >
                 {t('Kim kaç kere nöbet tutmuş ?')}
               </Typography>
+
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={getStatiticView}
+              >
+                İstatistikleri Gör
+              </Button>
               <div style={{ marginTop: '55px', textAlign: 'center' }}>
                 <table style={{ marginLeft: '30px' }}>
                   <tbody>
-                    {postSoldierCount.map((data) => (
+                    {soldierView.map((data) => (
                       <tr>
                         <td>{data._id}</td>
                         <td>{data.count}</td>

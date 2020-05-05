@@ -758,7 +758,11 @@ export default function PostCreate() {
               </Grid>
             </Card>
             <div className="saveButtonPlace">
-              <Button type="submit" className="glow-on-hover">
+              <Button
+                type="submit"
+                className="glow-on-hover"
+                disabled={twentytwoZero.length > 0 ? false : true}
+              >
                 <Save fontSize="small" style={{ marginRight: '15px' }} />{' '}
                 {t('save')}
               </Button>
