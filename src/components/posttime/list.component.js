@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import Moment from 'moment';
 import trLocale from 'date-fns/locale/tr';
 import DateFnsUtils from '@date-io/date-fns';
+import { useSnackbar } from 'notistack';
 
 import {
   MuiPickersUtilsProvider,
@@ -22,6 +23,11 @@ import {
   FormControl,
   Button,
   FormHelperText,
+  DialogContent,
+  Dialog,
+  DialogTitle,
+  DialogContentText,
+  DialogActions,
 } from '@material-ui/core';
 
 import {
@@ -44,6 +50,7 @@ import {
   ViewColumn,
   Receipt,
   Visibility,
+  Delete,
 } from '@material-ui/icons';
 
 import '../../assets/css/style.css';
@@ -51,7 +58,7 @@ import '../../assets/css/style.css';
 export default function PostTime() {
   const [t] = useTranslation();
   const history = useHistory();
-
+  const { enqueueSnackbar } = useSnackbar();
   const [postSoldierCount, seTpostSoldierCount] = useState([]);
   const [data, seTdata] = useState([]);
   const [state, seTstate] = useState({
@@ -59,13 +66,16 @@ export default function PostTime() {
   });
   const [soldier, seTsoldier] = useState([]);
   const [soldierView, seTsoldierView] = useState([]);
+  const [soldierCount, seTsoldierCount] = useState(0);
+  const [openalert, seTopenalert] = useState(false);
+  const [thatid, seTthatid] = useState(0);
 
   const columns = [
     {
       title: t('Tarih'),
       field: 'date',
       render: (rowData) => (
-        <div>{Moment(rowData.date).format('DD MMMM YYYY')}</div>
+        <div>{Moment(rowData.date).format('DD MMMM YYYY - dddd')}</div>
       ),
     },
     {
@@ -76,6 +86,21 @@ export default function PostTime() {
           <Link to={`/posttime/edit/${rowData._id}`}>
             <Visibility />
           </Link>
+
+          <Tooltip title={t('Nöbet Sil')}>
+            <Button
+              variant="outlined"
+              color="primary"
+              style={{ float: 'right', marginRight: '115px' }}
+              onClick={() => {
+                seTopenalert(true);
+
+                seTthatid(rowData._id);
+              }}
+            >
+              <Delete />
+            </Button>
+          </Tooltip>
         </div>
       ),
     },
@@ -106,7 +131,17 @@ export default function PostTime() {
     )),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
   };
-
+  const deleteData = (id) => {
+    axios.delete(`http://localhost:5000/posttime/${thatid}`).then((res) => {
+      history.push('/PostTimeList');
+      enqueueSnackbar(t('Nöbet Silindi'), { variant: res.data.variant });
+    });
+    seTthatid(0);
+    getPostSoldierStatistic();
+    getPostTime();
+    getPostSoldier();
+    seTopenalert(false);
+  };
   const getPostSoldierStatistic = () => {
     axios.post('http://localhost:5000/posttime/statistic').then((res) => {
       seTpostSoldierCount(res.data);
@@ -143,11 +178,47 @@ export default function PostTime() {
       }
     }
     seTsoldierView(soldierN);
-    console.log(soldierN);
+    seTsoldierCount(soldierN.length);
   };
   return (
     <>
       <div className="containerP">
+        <Dialog
+          open={openalert}
+          onClose={() => {
+            seTopenalert(false);
+          }}
+        >
+          <DialogTitle>{t('SİL')}</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              {t('Gerçekten Silmek İstiyor musunuz?')}
+              <br />
+              {t(' Silerseniz, bu verilere bir daha erişemezsiniz.')}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                seTopenalert(false);
+              }}
+              color="primary"
+            >
+              {' '}
+              {t('cancel')}{' '}
+            </Button>
+            <Button
+              onClick={() => {
+                deleteData(state._id);
+              }}
+              color="primary"
+              autoFocus
+            >
+              {t('delete')}
+            </Button>
+          </DialogActions>
+        </Dialog>
+
         <Grid item container spacing={3}>
           <Grid container item md={9} className="panelGridRelative">
             <Card className="listViewPaper">
@@ -207,11 +278,11 @@ export default function PostTime() {
               >
                 İstatistikleri Gör
               </Button>
-              <div style={{ marginTop: '55px', textAlign: 'center' }}>
+              <div style={{ marginTop: '55px', textAlign: 'left' }}>
                 <table style={{ marginLeft: '30px' }}>
                   <tbody>
                     {soldierView.map((data) => (
-                      <tr>
+                      <tr key={data._id}>
                         <td>{data._id}</td>
                         <td>{data.count}</td>
                       </tr>
