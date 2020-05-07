@@ -15,7 +15,9 @@ const SoldierSchema = new Schema(
     },
     gun_number: {
       type: String,
+      required: true,
       trim: true,
+      unique: true,
     },
     ssn: {
       type: String,

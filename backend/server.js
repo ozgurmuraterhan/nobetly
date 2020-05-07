@@ -22,7 +22,7 @@ mongoose.connect(uri, {
 
 const connection = mongoose.connection;
 connection.once('open', () => {
-  console.log('connection MongoDB');
+  console.log('Veri tabanına bağlandık komutanım, her şey hazır.');
 });
 
 const soldierRouter = require('./routes/soldier');
@@ -42,5 +42,5 @@ app.use('/postgroups', postGroupsRouter);
 
 app.use('/posttime', posttimeRouter);
 app.listen(port, () => {
-  console.log('sever is runnin port: ' + port);
+  console.log('Şu port hizmete açılıyor: ' + port);
 });

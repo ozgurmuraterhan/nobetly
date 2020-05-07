@@ -448,6 +448,7 @@ export default function SoldierEdit(props) {
                     <FormControl>
                       <TextValidator
                         label={t('Silah Numarası')}
+                        required
                         value={state.gun_number}
                         onChange={(e) => {
                           seTstate({ ...state, gun_number: e.target.value });

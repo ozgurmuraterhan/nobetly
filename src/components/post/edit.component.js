@@ -482,22 +482,7 @@ export default function PostCreate(props) {
                       <FormControl style={{ zIndex: 12 }}>
                         <Select
                           required
-                          isMulti
-                          styles={{
-                            singleValue: (base) => ({
-                              ...base,
-                              color: 'white',
-                            }),
-                            control: (base) => ({
-                              ...base,
-                              color: 'white',
-                              width: '100%',
-                              border: 0,
-                              borderBottom: '1px solid #949494',
-                              borderRadius: 0,
-                            }),
-                          }}
-                          placeholder={t('Nöber Yeri kategorisi')}
+                          placeholder={t('Nöbet Yeri kategorisi')}
                           value={state.selectedGroupItems}
                           options={findpostGroup}
                           onChange={(selectedOption) => {

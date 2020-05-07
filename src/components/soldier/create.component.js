@@ -322,6 +322,7 @@ export default function SoldierCreate() {
                   <FormGroup className="FormGroup">
                     <FormControl>
                       <TextValidator
+                        required
                         label={t('Silah Numarası')}
                         value={state.gun_number}
                         onChange={(e) => {

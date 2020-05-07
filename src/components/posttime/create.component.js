@@ -213,163 +213,176 @@ export default function PostCreate() {
     const twentyTwentytwoN = [];
     const twentytwoZeroN = [];
     const LocalPostsN = [];
+    try {
+      for (const i in towerDataS[0]) {
+        //console.log(towerDataS[0][i]);
+        let say = 0;
+        for (const j in towerDataS[0][i]) {
+          //console.log(towerDataS[0][i][j]);
+          for (const k in towerDataS[0][i][j]) {
+            say = say + 1;
+            //console.log( towerDataS[0][i][j][k].name +  ' - ' + towerDataS[0][i][j][k].times[NowDate][j].label );
+            let postPerson = [];
+            let postImportantNumber = 1;
 
-    for (const i in towerDataS[0]) {
-      //console.log(towerDataS[0][i]);
-      let say = 0;
-      for (const j in towerDataS[0][i]) {
-        //console.log(towerDataS[0][i][j]);
-        for (const k in towerDataS[0][i][j]) {
-          say = say + 1;
-          //console.log( towerDataS[0][i][j][k].name +  ' - ' + towerDataS[0][i][j][k].times[NowDate][j].label );
-          let postPerson = [];
-          let postImportantNumber = 1;
+            if (towerDataS[0][i][j][k].times[NowDate][j].value) {
+              for (
+                let yy = 0;
+                yy < Number(towerDataS[0][i][j][k].person);
+                yy++
+              ) {
+                let params = [
+                  { nowDate: NowDate },
+                  { time: towerDataS[0][i][j][k].times[NowDate][j].label },
+                  { norPerson: norPersonS },
+                  { plusNumber: postImportantNumber },
+                  { isTower: towerDataS[0][i][j][k].group_id[0].label },
+                ];
 
-          if (towerDataS[0][i][j][k].times[NowDate][j].value) {
-            for (let yy = 0; yy < Number(towerDataS[0][i][j][k].person); yy++) {
-              let params = [
-                { nowDate: NowDate },
-                { time: towerDataS[0][i][j][k].times[NowDate][j].label },
-                { norPerson: norPersonS },
-                { plusNumber: postImportantNumber },
-                { isTower: towerDataS[0][i][j][k].group_id[0].label },
-              ];
+                let inTheSoldier = await getSoldierData(params);
+                postPerson.push(inTheSoldier);
 
-              let inTheSoldier = await getSoldierData(params);
-              postPerson.push(inTheSoldier);
-
-              LocalPostsN.push({
+                LocalPostsN.push({
+                  tower: towerDataS[0][i][j][k].name,
+                  time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                  person: inTheSoldier.name,
+                });
+              }
+            } else {
+              postPerson.push({ name: 'NÖBET YOK' });
+            }
+            if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '00.00 - 02.00'
+            ) {
+              zeroTwoN.push({
                 tower: towerDataS[0][i][j][k].name,
                 time: towerDataS[0][i][j][k].times[NowDate][j].label,
-                person: inTheSoldier.name,
+                person: postPerson,
               });
+              seTzeroTwo(zeroTwoN);
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '02.00 - 04.00'
+            ) {
+              twoFourN.push({
+                tower: towerDataS[0][i][j][k].name,
+                time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                person: postPerson,
+              });
+              seTtwoFour(twoFourN);
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '04.00 - 06.00'
+            ) {
+              fourSixN.push({
+                tower: towerDataS[0][i][j][k].name,
+                time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                person: postPerson,
+              });
+              seTfourSix(fourSixN);
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '06.00 - 08.00'
+            ) {
+              sixEightN.push({
+                tower: towerDataS[0][i][j][k].name,
+                time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                person: postPerson,
+              });
+              seTsixEight(sixEightN);
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '08.00 - 10.00'
+            ) {
+              eightTenN.push({
+                tower: towerDataS[0][i][j][k].name,
+                time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                person: postPerson,
+              });
+              seTeightTen(eightTenN);
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '10.00 - 12.00'
+            ) {
+              tenTwelveN.push({
+                tower: towerDataS[0][i][j][k].name,
+                time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                person: postPerson,
+              });
+              seTtenTwelve(tenTwelveN);
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '12.00 - 14.00'
+            ) {
+              twelveFourteenN.push({
+                tower: towerDataS[0][i][j][k].name,
+                time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                person: postPerson,
+              });
+              seTtwelveFourteen(twelveFourteenN);
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '14.00 - 16.00'
+            ) {
+              fourteenSixteenN.push({
+                tower: towerDataS[0][i][j][k].name,
+                time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                person: postPerson,
+              });
+              seTfourteenSixteen(fourteenSixteenN);
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '16.00 - 18.00'
+            ) {
+              sixteenEightteenN.push({
+                tower: towerDataS[0][i][j][k].name,
+                time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                person: postPerson,
+              });
+              seTsixteenEightteen(sixteenEightteenN);
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '18.00 - 20.00'
+            ) {
+              eightteenTwentyN.push({
+                tower: towerDataS[0][i][j][k].name,
+                time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                person: postPerson,
+              });
+              seTeightteenTwenty(eightteenTwentyN);
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '20.00 - 22.00'
+            ) {
+              twentyTwentytwoN.push({
+                tower: towerDataS[0][i][j][k].name,
+                time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                person: postPerson,
+              });
+              seTtwentyTwentytwo(twentyTwentytwoN);
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '22.00 - 00.00'
+            ) {
+              twentytwoZeroN.push({
+                tower: towerDataS[0][i][j][k].name,
+                time: towerDataS[0][i][j][k].times[NowDate][j].label,
+                person: postPerson,
+              });
+              seTtwentytwoZero(twentytwoZeroN);
             }
-          } else {
-            postPerson.push({ name: 'NÖBET YOK' });
-          }
-          if (
-            towerDataS[0][i][j][k].times[NowDate][j].label == '00.00 - 02.00'
-          ) {
-            zeroTwoN.push({
-              tower: towerDataS[0][i][j][k].name,
-              time: towerDataS[0][i][j][k].times[NowDate][j].label,
-              person: postPerson,
-            });
-            seTzeroTwo(zeroTwoN);
-          } else if (
-            towerDataS[0][i][j][k].times[NowDate][j].label == '02.00 - 04.00'
-          ) {
-            twoFourN.push({
-              tower: towerDataS[0][i][j][k].name,
-              time: towerDataS[0][i][j][k].times[NowDate][j].label,
-              person: postPerson,
-            });
-            seTtwoFour(twoFourN);
-          } else if (
-            towerDataS[0][i][j][k].times[NowDate][j].label == '04.00 - 06.00'
-          ) {
-            fourSixN.push({
-              tower: towerDataS[0][i][j][k].name,
-              time: towerDataS[0][i][j][k].times[NowDate][j].label,
-              person: postPerson,
-            });
-            seTfourSix(fourSixN);
-          } else if (
-            towerDataS[0][i][j][k].times[NowDate][j].label == '06.00 - 08.00'
-          ) {
-            sixEightN.push({
-              tower: towerDataS[0][i][j][k].name,
-              time: towerDataS[0][i][j][k].times[NowDate][j].label,
-              person: postPerson,
-            });
-            seTsixEight(sixEightN);
-          } else if (
-            towerDataS[0][i][j][k].times[NowDate][j].label == '08.00 - 10.00'
-          ) {
-            eightTenN.push({
-              tower: towerDataS[0][i][j][k].name,
-              time: towerDataS[0][i][j][k].times[NowDate][j].label,
-              person: postPerson,
-            });
-            seTeightTen(eightTenN);
-          } else if (
-            towerDataS[0][i][j][k].times[NowDate][j].label == '10.00 - 12.00'
-          ) {
-            tenTwelveN.push({
-              tower: towerDataS[0][i][j][k].name,
-              time: towerDataS[0][i][j][k].times[NowDate][j].label,
-              person: postPerson,
-            });
-            seTtenTwelve(tenTwelveN);
-          } else if (
-            towerDataS[0][i][j][k].times[NowDate][j].label == '12.00 - 14.00'
-          ) {
-            twelveFourteenN.push({
-              tower: towerDataS[0][i][j][k].name,
-              time: towerDataS[0][i][j][k].times[NowDate][j].label,
-              person: postPerson,
-            });
-            seTtwelveFourteen(twelveFourteenN);
-          } else if (
-            towerDataS[0][i][j][k].times[NowDate][j].label == '14.00 - 16.00'
-          ) {
-            fourteenSixteenN.push({
-              tower: towerDataS[0][i][j][k].name,
-              time: towerDataS[0][i][j][k].times[NowDate][j].label,
-              person: postPerson,
-            });
-            seTfourteenSixteen(fourteenSixteenN);
-          } else if (
-            towerDataS[0][i][j][k].times[NowDate][j].label == '16.00 - 18.00'
-          ) {
-            sixteenEightteenN.push({
-              tower: towerDataS[0][i][j][k].name,
-              time: towerDataS[0][i][j][k].times[NowDate][j].label,
-              person: postPerson,
-            });
-            seTsixteenEightteen(sixteenEightteenN);
-          } else if (
-            towerDataS[0][i][j][k].times[NowDate][j].label == '18.00 - 20.00'
-          ) {
-            eightteenTwentyN.push({
-              tower: towerDataS[0][i][j][k].name,
-              time: towerDataS[0][i][j][k].times[NowDate][j].label,
-              person: postPerson,
-            });
-            seTeightteenTwenty(eightteenTwentyN);
-          } else if (
-            towerDataS[0][i][j][k].times[NowDate][j].label == '20.00 - 22.00'
-          ) {
-            twentyTwentytwoN.push({
-              tower: towerDataS[0][i][j][k].name,
-              time: towerDataS[0][i][j][k].times[NowDate][j].label,
-              person: postPerson,
-            });
-            seTtwentyTwentytwo(twentyTwentytwoN);
-          } else if (
-            towerDataS[0][i][j][k].times[NowDate][j].label == '22.00 - 00.00'
-          ) {
-            twentytwoZeroN.push({
-              tower: towerDataS[0][i][j][k].name,
-              time: towerDataS[0][i][j][k].times[NowDate][j].label,
-              person: postPerson,
-            });
-            seTtwentytwoZero(twentytwoZeroN);
-          }
-          if (say >= allSoldier.length / 3) {
-            for (let yy = 0; yy < Number(towerDataS[0][i][j][k].person); yy++) {
-              let y = norPersonS;
-              y.shift();
-              seTnorPersonS(y);
+            if (say >= allSoldier.length / 3) {
+              for (
+                let yy = 0;
+                yy < Number(towerDataS[0][i][j][k].person);
+                yy++
+              ) {
+                let y = norPersonS;
+                y.shift();
+                seTnorPersonS(y);
+              }
             }
           }
+
+          seTnorPersonS([{ name: 'dene' }]);
         }
-
-        seTnorPersonS([{ name: 'dene' }]);
       }
-    }
 
-    seTLocalPosts(LocalPostsN);
+      seTLocalPosts(LocalPostsN);
+    } catch (err) {
+      alert(
+        'BİR HATA OLDU\nBu şekilde nöbet yazılamaz.\n \n Yapabilecekleriniz şunlar: \n1-Nöbet sayısını azaltın.  \n2-Asker sayısını arttırın \n3- Nöbet yeri kategorilerini doğru ve büyük harfle girin örn: KULE \n4. Asker silah numaralarını girin. '
+      );
+    }
   }
 
   const onSubmit = (e) => {
