@@ -13,6 +13,7 @@ ReactDOM.render(
   >
     <App />
   </SnackbarProvider>,
-
   document.getElementById('root')
 );
+
+module.hot.accept();

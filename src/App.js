@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { HashRouter as Router, Route, Link } from 'react-router-dom';
 import Moment from 'moment';
 
 import { useTranslation } from 'react-i18next';
@@ -41,8 +41,6 @@ import BoutList from './components/bout/list.component';
 
 import DatesCreate from './components/dates/create.component';
 
-import PPimage from './assets/images/pp2.jpeg';
-
 export default function App() {
   const { t } = useTranslation();
 
@@ -55,6 +53,7 @@ export default function App() {
 
   return (
     <Router>
+      <Link to="/Soldierlist">About</Link>
       <Route
         render={({ location, history }) => (
           <>
