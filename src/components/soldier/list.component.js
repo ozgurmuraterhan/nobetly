@@ -87,7 +87,7 @@ export default function SoldierList() {
       field: 'name',
     },
     {
-      title: t('tuttuğu nöbet'),
+      title: t('Nöbet Katsayısı'),
       field: 'totalPost',
     },
     {

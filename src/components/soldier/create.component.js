@@ -66,7 +66,7 @@ export default function SoldierCreate() {
     selected1Zipcode: '',
     selected1Town: '',
     name: '',
-    email: '',
+    totalPost: '',
     gun_number: '',
     phone: '',
     risk: 80,
@@ -249,7 +249,7 @@ export default function SoldierCreate() {
     e.preventDefault();
     const Soldier = {
       name: state.name,
-      email: state.email,
+      totalPost: state.totalPost,
       group_id: state.selectedGroupItems,
       gun_number: state.gun_number,
       phone: state.phone,
@@ -353,15 +353,20 @@ export default function SoldierCreate() {
                   <FormGroup className="FormGroup">
                     <FormControl>
                       <TextValidator
-                        label={t('Eposta Adresi')}
-                        value={state.email}
+                        label={t('Nöbet katsayısı')}
+                        value={state.totalPost}
                         onChange={(e) => {
-                          seTstate({ ...state, email: e.target.value });
+                          seTstate({ ...state, totalPost: e.target.value });
                         }}
-                        validators={['isEmail']}
-                        errorMessages={[t('emailIsNotValid')]}
+                        type="number"
+                        validators={['isNumber']}
+                        errorMessages={[t('Rakamlardan oluşmalı.')]}
                       />
-                      <FormHelperText>{t('youNeedaEmail')}</FormHelperText>
+                      <FormHelperText>
+                        {t(
+                          'Nöbet katsayısını düşürürseniz asker daha çok nöbet tutar.'
+                        )}
+                      </FormHelperText>
                     </FormControl>
                   </FormGroup>
                 </Grid>

@@ -40,6 +40,8 @@ import BoutCreate from './components/bout/create.component';
 import BoutList from './components/bout/list.component';
 
 import DatesCreate from './components/dates/create.component';
+import Config from './components/config/list.component';
+import Created from './components/config/created.component';
 
 export default function App() {
   const { t } = useTranslation();
@@ -53,10 +55,11 @@ export default function App() {
 
   return (
     <Router>
-      <Link to="/Soldierlist">About</Link>
       <Route
         render={({ location, history }) => (
           <>
+            {/*home page options*/}
+            {location.pathname === '/' ? history.push('/created') : ''}
             <SideNav
               onMouseOver={() => seTopen(true)}
               onMouseOut={() => seTopen(false)}
@@ -74,7 +77,6 @@ export default function App() {
               <SideNav.Nav defaultSelected="Soldierlist">
                 <NavItem eventKey="Soldierlist">
                   <NavIcon>
-                    {' '}
                     <SupervisedUserCircle
                       fontSize="large"
                       style={{ marginTop: '7px' }}
@@ -102,18 +104,7 @@ export default function App() {
                   <NavText> Nöbet Çizelgesi </NavText>
                 </NavItem>
 
-                <NavItem eventKey="reports">
-                  <NavIcon>
-                    {' '}
-                    <InsertChart
-                      fontSize="large"
-                      style={{ marginTop: '7px' }}
-                    />{' '}
-                  </NavIcon>
-                  <NavText> Raporlar </NavText>
-                </NavItem>
-
-                <NavItem eventKey="charts">
+                <NavItem eventKey="config">
                   <NavIcon>
                     {' '}
                     <ArrowDropDownCircle
@@ -122,46 +113,27 @@ export default function App() {
                     />{' '}
                   </NavIcon>
                   <NavText> Ayarlar </NavText>
-
-                  <NavItem eventKey="chartssad">
-                    <NavText> Nöbet Yeri Ayarları </NavText>
-                  </NavItem>
-                  <NavItem eventKey="charts/barchart">
-                    <NavText> Asker Ayarları </NavText>
-                  </NavItem>
-                  <NavItem eventKey="Dates">
-                    <NavText> Saat Ayarları </NavText>
-                  </NavItem>
                 </NavItem>
               </SideNav.Nav>
             </SideNav>
             <main style={{ marginLeft: '55px' }}>
-              {/*<div>
-               Lang:
-              <button onClick={() => changeLanguage('tr')}>tr</button>
-              <button onClick={() => changeLanguage('en')}>en</button>
-              <span />
-            </div>*/}
               <div>
+                <Route path="/created" component={Created} />
                 <Route path="/SoldierList" component={SoldierList} />
                 <Route path="/SoldierCreate" component={SoldierCreate} />
                 <Route path="/Soldier/edit/:id" component={SoldierEdit} />
-
                 <Route path="/PostList" component={PostList} />
                 <Route path="/PostCreate" component={PostCreate} />
                 <Route path="/Post/edit/:id" component={PostEdit} />
-
                 <Route path="/PostTimeList" component={PostTimeList} />
                 <Route path="/PostTimeCreate" component={PostTimeCreate} />
                 <Route path="/PostTime/edit/:id" component={PostTimeEdit} />
-
                 <Route path="/BoutList" component={BoutList} />
                 <Route path="/BoutCreate" component={BoutCreate} />
                 <Route path="/Bout/edit/:id" component={BoutEdit} />
-
-                <Route path="/Dates" component={DatesCreate} />
+                <Route path="/config" component={Config} />
               </div>
-            </main>
+            </main>{' '}
           </>
         )}
       />

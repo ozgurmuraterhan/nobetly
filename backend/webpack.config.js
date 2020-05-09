@@ -19,7 +19,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
   },
   output: {
-    path: __dirname + '/dist',
+    path: __dirname + '../../dist',
     filename: 'bundle_server.js',
   },
 };

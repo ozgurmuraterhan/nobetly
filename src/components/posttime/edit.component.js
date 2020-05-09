@@ -58,6 +58,42 @@ import '../../assets/css/style.css';
 import { setDate } from 'date-fns';
 
 export default function PostEdit(props) {
+  const [rules_data, seTrules_data] = useState([]);
+  const [noncom_data, seTnoncom_data] = useState([]);
+  const [commander_data, seTcommander_data] = useState([]);
+
+  const getRulesData = () => {
+    axios.get('http://localhost:5000/rules').then((response) => {
+      if (response.data.length > 0) {
+        seTrules_data(response.data);
+      }
+    });
+  };
+
+  const getNoncomData = () => {
+    axios.get('http://localhost:5000/noncom').then((response) => {
+      if (response.data.length > 0) {
+        seTnoncom_data(response.data);
+      }
+    });
+  };
+
+  const getCommanderData = () => {
+    axios.get('http://localhost:5000/commander').then((response) => {
+      if (response.data.length > 0) {
+        let comman = [];
+        for (const i in response.data) {
+          comman.push({
+            name: response.data[i].name,
+            task: response.data[i].task,
+            rank: response.data[i].rank,
+          });
+        }
+        seTcommander_data(comman);
+      }
+    });
+  };
+
   class ComponentToPrint extends React.Component {
     render() {
       return (
@@ -286,7 +322,6 @@ export default function PostEdit(props) {
                 ))}
               </tr>
             </tbody>
-
             <tbody>
               <tr>
                 <td
@@ -441,51 +476,31 @@ export default function PostEdit(props) {
             <br />
             <b>TALİMATLAR</b>
             <br />
-            <input
-              style={{ width: '100%', float: 'left', border: 'none' }}
-              value="1- Nöbetler iç hizmet yönetmeliği medde 630'a göre tutulacaktır."
-            />
-            <br />
-            <input
-              style={{ width: '100%', float: 'left', border: 'none' }}
-              value="2- Nöbetler erbaş ve erler nöbet yerindeki talimatları okuyacak ve
-            bilecektir."
-            />{' '}
-            <br />
-            <input
-              style={{ width: '100%', float: 'left', border: 'none' }}
-              value="3- Nöbetçi, nöbet yeri genel ve özel talimatına göre hareket
-            edecektir."
-            />{' '}
-            <br />
-            <input
-              style={{ width: '100%', float: 'left', border: 'none' }}
-              value="4- Vip Nöbetçileri, havuza gelen ziyaretçileri gözleyecektir."
-            />{' '}
-            <br />
-            <input
-              style={{ width: '100%', float: 'left', border: 'none' }}
-              value="5- Kule nöbetçileri 6 şarşör ve 100 mermi alacaktır."
-            />{' '}
-            <br />
-            <input
-              style={{ width: '100%', float: 'left', border: 'none' }}
-              value="6- Nöbet değişikliği, erlerin müsaitlik durumuna göre çavuş
-            tarafından belirlenir."
-            />
-            <br />
+            {rules_data.map((res) => (
+              <div>
+                <input
+                  style={{ width: '100%', float: 'left', border: 'none' }}
+                  value={res.name}
+                />
+                <br />
+              </div>
+            ))}
+            <br></br>
             <b style={{ float: 'left', marginRight: '15px' }}>
               Nöbetçi Çavuş:{' '}
             </b>{' '}
-            <input
+            <select
               style={{
                 width: '30%',
                 fontSize: '12pt',
                 float: 'left',
                 border: 'none',
               }}
-              value="İnanır İLHAN"
-            />
+            >
+              {noncom_data.map((res) => (
+                <option>{res.name}</option>
+              ))}
+            </select>
           </div>
           <div
             style={{
@@ -507,7 +522,7 @@ export default function PostEdit(props) {
                 float: 'left',
                 border: 'none',
               }}
-              value="Tolga TURAN"
+              value={commander_data[1] ? commander_data[1].name : ''}
             />
             <br />{' '}
             <input
@@ -517,7 +532,7 @@ export default function PostEdit(props) {
                 float: 'left',
                 border: 'none',
               }}
-              value="J. Yzb."
+              value={commander_data[1] ? commander_data[1].rank : ''}
             />
             <br />{' '}
             <input
@@ -527,7 +542,7 @@ export default function PostEdit(props) {
                 float: 'left',
                 border: 'none',
               }}
-              value="Kh. Brl. K."
+              value={commander_data[1] ? commander_data[1].task : ''}
             />
             <br />
           </div>
@@ -544,7 +559,7 @@ export default function PostEdit(props) {
                 float: 'left',
                 border: 'none',
               }}
-              value="Cumali KOÇYİĞİT"
+              value={commander_data[0] ? commander_data[0].name : ''}
             />
             <br />{' '}
             <input
@@ -554,7 +569,7 @@ export default function PostEdit(props) {
                 float: 'left',
                 border: 'none',
               }}
-              value="Uzm. J.V.Kad. Çvş."
+              value={commander_data[0] ? commander_data[0].rank : ''}
             />
             <br />{' '}
             <input
@@ -564,7 +579,7 @@ export default function PostEdit(props) {
                 float: 'left',
                 border: 'none',
               }}
-              value="Mhf. Tk. K."
+              value={commander_data[0] ? commander_data[0].task : ''}
             />
             <br />
           </div>
@@ -606,6 +621,10 @@ export default function PostEdit(props) {
     Moment.locale('tr');
     getAllPostTime();
     getAllPost();
+
+    getRulesData();
+    getNoncomData();
+    getCommanderData();
   }, []);
   function getAllPostTime() {
     axios
