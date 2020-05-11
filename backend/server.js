@@ -13,11 +13,11 @@ app.use(cors());
 app.use(express.json());
 
 //local
-//const uri = 'mongodb://localhost:27017/local';
+const uri = 'mongodb://localhost:27017/local';
 
 //internet
-const uri =
-  'mongodb+srv://murat:murat3838@cluster0-2yepv.gcp.mongodb.net/test?retryWrites=true&w=majority';
+//const uri =
+('mongodb+srv://murat:murat3838@cluster0-2yepv.gcp.mongodb.net/test?retryWrites=true&w=majority');
 
 mongoose.connect(uri, {
   useNewUrlParser: true,

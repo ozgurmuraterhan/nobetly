@@ -53,140 +53,390 @@ router.route('/name').get((req, res, next) => {
 // fetch data by now date
 router.route('/gettime').post((req, res, next) => {
   if (req.body[0].nowDate == 'Monday') {
-    console.log(req.body[2].norPerson);
-    Soldier.findOneAndUpdate(
-      {
-        $and: [
-          {
-            'times.Monday': { label: req.body[1].time, value: Boolean(true) },
-          },
-          { $nor: req.body[2].norPerson },
-        ],
-      },
+    console.log(Boolean(req.body[5].plusNightNumber));
+    if (req.body[5].plusNightNumber == true) {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Monday': { label: req.body[1].time, value: Boolean(true) },
+            },
+            { $nor: req.body[2].norPerson },
+          ],
+        },
 
-      { $inc: { totalPost: +req.body[3].plusNumber } },
-      { sort: { totalPost: 1 } }
-    ).then((data) => {
-      res.json(data);
-    });
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: true,
+          },
+        },
+        { sort: { totalPostNight: 1, totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    } else {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Monday': { label: req.body[1].time, value: Boolean(true) },
+            },
+
+            { $nor: req.body[2].norPerson },
+          ],
+        },
+
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: false,
+          },
+        },
+        { sort: { totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    }
   }
 
   if (req.body[0].nowDate == 'Tuesday') {
-    Soldier.findOneAndUpdate(
-      {
-        $and: [
-          {
-            'times.Tuesday': { label: req.body[1].time, value: Boolean(true) },
-          },
-          { $nor: req.body[2].norPerson },
-        ],
-      },
+    if (req.body[5].plusNightNumber == true) {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Tuesday': {
+                label: req.body[1].time,
+                value: Boolean(true),
+              },
+            },
+            { $nor: req.body[2].norPerson },
+          ],
+        },
 
-      { $inc: { totalPost: +req.body[3].plusNumber } },
-      { sort: { totalPost: 1 } }
-    ).then((data) => {
-      res.json(data);
-    });
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: true,
+          },
+        },
+        { sort: { totalPostNight: 1, totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    } else {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Tuesday': {
+                label: req.body[1].time,
+                value: Boolean(true),
+              },
+            },
+
+            { $nor: req.body[2].norPerson },
+          ],
+        },
+
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: false,
+          },
+        },
+        { sort: { totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    }
   }
 
   if (req.body[0].nowDate == 'Wednesday') {
-    Soldier.findOneAndUpdate(
-      {
-        $and: [
-          {
-            'times.Wednesday': {
-              label: req.body[1].time,
-              value: Boolean(true),
+    if (req.body[5].plusNightNumber == true) {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Wednesday': {
+                label: req.body[1].time,
+                value: Boolean(true),
+              },
             },
-          },
-          { $nor: req.body[2].norPerson },
-        ],
-      },
+            { $nor: req.body[2].norPerson },
+          ],
+        },
 
-      { $inc: { totalPost: +req.body[3].plusNumber } },
-      { sort: { totalPost: 1 } }
-    ).then((data) => {
-      res.json(data);
-    });
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: true,
+          },
+        },
+        { sort: { totalPostNight: 1, totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    } else {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Wednesday': {
+                label: req.body[1].time,
+                value: Boolean(true),
+              },
+            },
+
+            { $nor: req.body[2].norPerson },
+          ],
+        },
+
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: false,
+          },
+        },
+        { sort: { totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    }
   }
 
   if (req.body[0].nowDate == 'Thursday') {
-    Soldier.findOneAndUpdate(
-      {
-        $and: [
-          {
-            'times.Thursday': { label: req.body[1].time, value: Boolean(true) },
-          },
-          { $nor: req.body[2].norPerson },
-        ],
-      },
+    if (req.body[5].plusNightNumber == true) {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Thursday': {
+                label: req.body[1].time,
+                value: Boolean(true),
+              },
+            },
+            { $nor: req.body[2].norPerson },
+          ],
+        },
 
-      { $inc: { totalPost: +req.body[3].plusNumber } },
-      { sort: { totalPost: 1 } }
-    ).then((data) => {
-      res.json(data);
-    });
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: true,
+          },
+        },
+        { sort: { totalPostNight: 1, totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    } else {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Thursday': {
+                label: req.body[1].time,
+                value: Boolean(true),
+              },
+            },
+
+            { $nor: req.body[2].norPerson },
+          ],
+        },
+
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: false,
+          },
+        },
+        { sort: { totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    }
   }
 
   if (req.body[0].nowDate == 'Friday') {
-    console.log(req.body[2].norPerson);
+    if (req.body[5].plusNightNumber == true) {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Friday': { label: req.body[1].time, value: Boolean(true) },
+            },
+            { $nor: req.body[2].norPerson },
+          ],
+        },
 
-    Soldier.findOneAndUpdate(
-      {
-        $and: [
-          {
-            'times.Friday': { label: req.body[1].time, value: Boolean(true) },
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
           },
-          { $nor: req.body[2].norPerson },
-        ],
-      },
+          $set: {
+            totalPostNight: true,
+          },
+        },
+        { sort: { totalPostNight: 1, totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    } else {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Friday': { label: req.body[1].time, value: Boolean(true) },
+            },
 
-      { $inc: { totalPost: +req.body[3].plusNumber } },
-      { sort: { totalPost: 1 } }
-    ).then((data) => {
-      res.json(data);
-    });
+            { $nor: req.body[2].norPerson },
+          ],
+        },
+
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: false,
+          },
+        },
+        { sort: { totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    }
   }
 
   if (req.body[0].nowDate == 'Saturday') {
-    Soldier.findOneAndUpdate(
-      {
-        $and: [
-          {
-            'times.Saturday': { label: req.body[1].time, value: Boolean(true) },
-          },
-          { $nor: req.body[2].norPerson },
-        ],
-      },
+    if (req.body[5].plusNightNumber == true) {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Saturday': {
+                label: req.body[1].time,
+                value: Boolean(true),
+              },
+            },
+            { $nor: req.body[2].norPerson },
+          ],
+        },
 
-      { $inc: { totalPost: +req.body[3].plusNumber } },
-      { sort: { totalPost: 1 } }
-    ).then((data) => {
-      res.json(data);
-    });
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: true,
+          },
+        },
+        { sort: { totalPostNight: 1, totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    } else {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Saturday': {
+                label: req.body[1].time,
+                value: Boolean(true),
+              },
+            },
+
+            { $nor: req.body[2].norPerson },
+          ],
+        },
+
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: false,
+          },
+        },
+        { sort: { totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    }
   }
   if (req.body[0].nowDate == 'Sunday') {
-    Soldier.findOneAndUpdate(
-      {
-        $and: [
-          {
-            'times.Sunday': { label: req.body[1].time, value: Boolean(true) },
-          },
-          { $nor: req.body[2].norPerson },
-        ],
-      },
+    if (req.body[5].plusNightNumber == true) {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Sunday': { label: req.body[1].time, value: Boolean(true) },
+            },
+            { $nor: req.body[2].norPerson },
+          ],
+        },
 
-      { $inc: { totalPost: +req.body[3].plusNumber } },
-      { sort: { totalPost: 1 } }
-    ).then((data) => {
-      res.json(data);
-    });
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: true,
+          },
+        },
+        { sort: { totalPostNight: 1, totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    } else {
+      Soldier.findOneAndUpdate(
+        {
+          $and: [
+            {
+              'times.Sunday': { label: req.body[1].time, value: Boolean(true) },
+            },
+
+            { $nor: req.body[2].norPerson },
+          ],
+        },
+
+        {
+          $inc: {
+            totalPost: +req.body[3].plusNumber,
+          },
+          $set: {
+            totalPostNight: false,
+          },
+        },
+        { sort: { totalPost: 1 } }
+      ).then((data) => {
+        res.json(data);
+      });
+    }
   }
 });
 
 // update add post by id
 router.route('/postnumberzero').get((req, res, next) => {
-  Soldier.updateMany({}, { $set: { totalPost: 0 } })
+  Soldier.updateMany({}, { $set: { totalPost: 0, totalPostNight: 0 } })
     .then(() => {
       res.json({
         messagge: title + ' Update',

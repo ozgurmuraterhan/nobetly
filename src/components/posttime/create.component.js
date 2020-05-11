@@ -173,7 +173,7 @@ export default function PostCreate() {
   async function getSoldierData(params) {
     const postPerson = [];
     const norPerson = norPersonS;
-    console.log(params[4].isTower);
+
     await axios
 
       .post('http://localhost:5000/soldier/gettime', params)
@@ -224,6 +224,22 @@ export default function PostCreate() {
             //console.log( towerDataS[0][i][j][k].name +  ' - ' + towerDataS[0][i][j][k].times[NowDate][j].label );
             let postPerson = [];
             let postImportantNumber = 1;
+            let postImportantNumberNight;
+            if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '00.00 - 02.00'
+            ) {
+              postImportantNumberNight = true;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '02.00 - 04.00'
+            ) {
+              postImportantNumberNight = true;
+            } else if (
+              towerDataS[0][i][j][k].times[NowDate][j].label == '04.00 - 06.00'
+            ) {
+              postImportantNumberNight = true;
+            } else {
+              postImportantNumberNight = false;
+            }
 
             if (towerDataS[0][i][j][k].times[NowDate][j].value) {
               for (
@@ -237,9 +253,11 @@ export default function PostCreate() {
                   { norPerson: norPersonS },
                   { plusNumber: postImportantNumber },
                   { isTower: towerDataS[0][i][j][k].group_id[0].label },
+                  { plusNightNumber: postImportantNumberNight },
                 ];
 
                 let inTheSoldier = await getSoldierData(params);
+                console.log(inTheSoldier);
                 postPerson.push(inTheSoldier);
 
                 LocalPostsN.push({

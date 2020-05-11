@@ -50,7 +50,14 @@ const SoldierSchema = new Schema(
     totalPost: {
       type: Number,
     },
-
+    totalPostNight2: {
+      type: Number,
+      default: 1,
+      required: true,
+    },
+    totalPostNight: {
+      type: Boolean,
+    },
     defaultAddress_address: {
       type: String,
     },
